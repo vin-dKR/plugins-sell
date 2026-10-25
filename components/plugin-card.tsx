@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { PluginImage } from "@/components/plugin-image";
 import type { Plugin } from "@/lib/plugins";
 import { formatPrice } from "@/lib/payment";
 
@@ -7,13 +7,11 @@ export function PluginCard({ plugin }: { plugin: Plugin }) {
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:border-stone-300 hover:shadow-lg hover:shadow-stone-200/60">
       <div className="flex aspect-[16/9] items-center justify-center border-b border-stone-100 bg-stone-50 p-7">
-        <Image
+        <PluginImage
           src={plugin.thumbnail}
           alt={`${plugin.name} WordPress plugin icon`}
-          width={128}
-          height={128}
+          name={plugin.name}
           className="h-24 w-24 rounded-xl object-contain shadow-sm"
-          unoptimized
         />
       </div>
       <div className="flex flex-1 flex-col p-5">

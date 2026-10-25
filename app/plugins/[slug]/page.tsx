@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PaymentModal } from "@/components/payment-modal";
+import { PluginImage } from "@/components/plugin-image";
 import { SITE_CONFIG, getSiteUrl } from "@/lib/config";
 import { formatPrice } from "@/lib/payment";
 import { getPluginBySlug, plugins } from "@/lib/plugins";
@@ -77,7 +77,7 @@ export default async function PluginPage({ params }: PluginPageProps) {
         <div>
           <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
             <div className="flex h-32 w-32 shrink-0 items-center justify-center rounded-2xl border border-stone-200 bg-white p-5 shadow-sm sm:h-40 sm:w-40">
-              <Image src={plugin.thumbnail} alt={`${plugin.name} WordPress plugin icon`} width={128} height={128} priority unoptimized className="h-full w-full object-contain" />
+              <PluginImage src={plugin.thumbnail} alt={`${plugin.name} WordPress plugin icon`} name={plugin.name} priority className="h-full w-full object-contain" />
             </div>
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-emerald-700">{plugin.category}</p>
