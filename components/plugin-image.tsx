@@ -2,16 +2,21 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { getOfficialPluginIconSources } from "@/lib/plugin-images";
 
 type PluginImageProps = {
   src: string;
+  slug: string;
   alt: string;
   name: string;
   className?: string;
   priority?: boolean;
 };
 
-export function PluginImage({ src, alt, name, className, priority = false }: PluginImageProps) {
+export function PluginImage({ src, slug, alt, name, className, priority = false }: PluginImageProps) {
+  const officialSources = getOfficialPluginIconSources(slug);
+  const sources = [src, ...officialSources.filter((source) => source !== src)];
+  const [sourceIndex, setSourceIndex] = useState(0);
   const [hasFailed, setHasFailed] = useState(false);
 
   if (hasFailed) {
@@ -28,14 +33,20 @@ export function PluginImage({ src, alt, name, className, priority = false }: Plu
 
   return (
     <Image
-      src={src}
+      src={sources[sourceIndex]}
       alt={alt}
       width={128}
       height={128}
       className={className}
       priority={priority}
       unoptimized
-      onError={() => setHasFailed(true)}
+      onError={() => {
+        if (sourceIndex < sources.length - 1) {
+          setSourceIndex((index) => index + 1);
+        } else {
+          setHasFailed(true);
+        }
+      }}
     />
   );
 }

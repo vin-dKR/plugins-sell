@@ -1,3 +1,5 @@
+import { getOfficialPluginIcon } from "@/lib/plugin-images";
+
 export interface Plugin {
   slug: string;
   name: string;
@@ -28,10 +30,6 @@ export type PluginCategory =
   | "Utility";
 
 const wordpressPluginUrl = (slug: string) => `https://wordpress.org/plugins/${slug}/`;
-// WordPress.org generates this SVG for every plugin slug, so it remains reliable
-// even where a plugin author has not uploaded a custom icon asset.
-const wordpressIcon = (slug: string) => `https://s.w.org/plugins/geopattern-icon/${slug}.svg`;
-
 type PluginSeed = Omit<Plugin, "thumbnail" | "wordpressUrl">;
 
 const seedPlugins: PluginSeed[] = [
@@ -139,7 +137,7 @@ const seedPlugins: PluginSeed[] = [
 
 export const plugins: Plugin[] = seedPlugins.map((plugin) => ({
   ...plugin,
-  thumbnail: wordpressIcon(plugin.slug),
+  thumbnail: getOfficialPluginIcon(plugin.slug),
   wordpressUrl: wordpressPluginUrl(plugin.slug),
 }));
 
