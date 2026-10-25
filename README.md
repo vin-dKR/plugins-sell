@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PluginStore
 
-## Getting Started
+A simple static WordPress plugin catalog built with Next.js, TypeScript, and Tailwind CSS. It uses UPI QR payments and sends customers to WhatsApp for manual payment verification and fulfillment. There is no checkout, database, authentication, or payment-gateway integration.
 
-First, run the development server:
+## Run locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Update the single configuration file at `lib/config.ts` before deployment:
 
-## Learn More
+- `url` — your production domain, used for canonicals, sitemap entries, structured data, and fallback purchase links.
+- `upiId` and `upiName` — payment destination and UPI display name.
+- `whatsappNumber` — the WhatsApp destination number in international digits-only format.
 
-To learn more about Next.js, take a look at the following resources:
+The catalog is static in `lib/plugins.ts`. Every plugin route is pre-generated, has page-specific metadata, and is included in `sitemap.xml`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Validate
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npx tsc --noEmit
+npm run lint
+npx next build --webpack
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`next build` defaults to Turbopack in this Next.js version. In some restricted local environments its CSS worker cannot open the temporary local port it needs; the documented webpack build command above is an equivalent production validation fallback.
